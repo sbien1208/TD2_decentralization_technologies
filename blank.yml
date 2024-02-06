@@ -1,0 +1,21 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Doing test deploy to Pinata
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - name: Pinata deploy action step
+        id: deploy
+        uses: anantaramdas/ipfs-pinata-deploy-action@v1.6.4
+        with:
+          pin-name: 'Samantha'
+          path: './IPFS-command.png'
+          pinata-api-key: ${{ "490f4b71439fffa29fc1" }}
+          pinata-secret-api-key: ${{ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0YzkwMDUwMi04OGNmLTQ4OTQtOTc1OS05YzY4ZmQyMTYyYmIiLCJlbWFpbCI6InNhbWFudGhhLmJpZW5uYXNzaXNAZWR1LmRldmluY2kuZnIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiNDkwZjRiNzE0MzlmZmZhMjlmYzEiLCJzY29wZWRLZXlTZWNyZXQiOiIwZjViODUwOWNhMDQ5NTYxYTY2M2ViNDljYmY2YzA5ODg2MDY0N2YzZTNhNGRhNzZiYTg1OGI3NTY5ZjFlNzQ3IiwiaWF0IjoxNzA3MjI2Mzc2fQ.PQYmooJZEc1OhV-powaWcLUcVJ4-YiIQimprUJpN0ik" }}
+          verbose: true
+          remove-old: false
+      # Use the output from the `deploy` step
+      - name: Get the output hash
+        run: echo "The hash was ${{ steps.deploy.outputs.hash }}"
